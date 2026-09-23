@@ -1,4 +1,6 @@
 using BlazingPizza;
+using System.Globalization;
+using Microsoft.AspNetCore.Builder;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +9,9 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddHttpClient();
 builder.Services.AddSqlite<PizzaStoreContext>("Data Source=pizza.db");
 builder.Services.AddScoped<OrderState>();
+
+
+
 
 var app = builder.Build();
 
@@ -33,6 +38,13 @@ using (var scope = scopeFactory.CreateScope())
         SeedData.Initialize(db);
     }
 }
+
+// Create the Nigerian culture info
+var nigeriaCulture = new CultureInfo("en-NG");
+
+// Set it as the default culture for the application
+CultureInfo.DefaultThreadCurrentCulture = nigeriaCulture;
+CultureInfo.DefaultThreadCurrentUICulture = nigeriaCulture;
 
 
 app.Run();
